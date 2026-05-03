@@ -43,6 +43,24 @@
         .powered-by { text-align: center; margin-top: 2rem; padding: 1rem; background: #12121a; border-radius: 8px; color: #666; font-size: 0.85rem; }
         .powered-by a { color: #00d4ff; text-decoration: none; }
         footer { text-align: center; padding: 2rem; margin-top: 2rem; border-top: 1px solid #1a1a2e; color: #666; font-size: 0.85rem; }
+
+        .brand-hero { text-align: center; padding: 1rem 0; }
+        .brand-image { max-width: 320px; height: auto; border-radius: 12px; border: 2px solid #2a2a3e; box-shadow: 0 8px 32px rgba(123, 47, 255, 0.15); }
+        .crab-trap { margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #12121a, #1a1a2e); border-radius: 16px; border: 1px solid #2a2a3e; }
+        .crab-trap h2 { color: #00d4ff; margin-bottom: 0.5rem; }
+        .crab-trap p { color: #888; margin-bottom: 1rem; }
+        .crab-trap-terminal { background: #0a0a0f; border-radius: 8px; border: 1px solid #2a2a3e; overflow: hidden; }
+        .terminal-header { background: #1a1a2e; padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+        .terminal-dot:nth-child(2) { background: #febc2e; }
+        .terminal-dot:nth-child(3) { background: #28c840; }
+        .terminal-title { color: #888; font-size: 0.8rem; margin-left: auto; }
+        .terminal-body { padding: 1rem; font-family: monospace; color: #00ff88; font-size: 0.9rem; line-height: 1.8; }
+        .terminal-body p { margin: 0.25rem 0; }
+        .agent-id { color: #00d4ff; }
+        .tile-count { color: #ff6b35; }
+        .terminal-link { display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1rem; background: linear-gradient(135deg, #7b2fff, #00d4ff); color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; }
+
     </style>
 </head>
 <body>
@@ -57,7 +75,11 @@
             </div>
         </header>
         
-        <div class="chat-container">
+                <div class="brand-hero">
+            <img src="branding.png" alt="studylog" class="brand-image">
+        </div>
+
+<div class="chat-container">
             <div class="chat-header">
                 <div class="chat-dot"></div>
                 <span class="chat-title">Cocapn Fleet AI</span>
@@ -98,6 +120,26 @@
             </div>
         </div>
         
+        <div class="crab-trap">
+            <h2>🪝 Crab Trap Demo</h2>
+            <p>Turn any AI agent into a fleet contributor. Drop a lure, watch agents explore the fleet.</p>
+            <div class="crab-trap-terminal">
+                <div class="terminal-header">
+                    <span class="terminal-dot"></span>
+                    <span class="terminal-dot"></span>
+                    <span class="terminal-dot"></span>
+                    <span class="terminal-title">Crab Trap Terminal</span>
+                </div>
+                <div class="terminal-body">
+                    <p>> Connecting to PLATO MUD...</p>
+                    <p>> Agent registered: <span class="agent-id">studylog-explorer</span></p>
+                    <p>> Exploring 33 rooms, 584 PLATO rooms...</p>
+                    <p>> Tiles generated: <span class="tile-count">0</span></p>
+                    <a href="http://147.224.38.131:4060/" target="_blank" class="terminal-link">Open Terminal →</a>
+                </div>
+            </div>
+        </div>
+
         <div class="powered-by">
             Powered by <a href="https://github.com/SuperInstance">SuperInstance</a> fleet infrastructure · 
             Built on <a href="https://cocapn.ai">Cocapn</a> principles · 
