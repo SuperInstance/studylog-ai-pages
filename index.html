@@ -1,230 +1,1435 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studylog — Build Knowledge That Compounds</title>
-  <meta name="description" content="PLATO-powered study tracker. Every session becomes a tile. Every tile compounds.">
-  <style>
-    :root { --bg: #0a0e17; --surface: #121825; --border: #1e2a3a; --text: #e2e8f0; --muted: #64748b; --accent: #f59e0b; --amber: #fbbf24; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; border-bottom: 1px solid var(--border); }
-    .logo { font-weight: 700; font-size: 1.2rem; }
-    .hero { text-align: center; padding: 5rem 0 3rem; background: linear-gradient(180deg, #1a1400 0%, var(--bg) 100%); }
-    .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.25rem; }
-    .hero h1 span { color: var(--amber); }
-    .hero .sub { font-size: 1.25rem; color: var(--muted); max-width: 600px; margin: 0 auto 2rem; }
-    .badge-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-    .badge { background: var(--surface); border: 1px solid var(--border); padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.8rem; }
-    .badge.live { border-color: var(--amber); color: var(--amber); }
-    .section { padding: 4rem 0; }
-    .section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
-    .section .lead { color: var(--muted); max-width: 680px; margin-bottom: 2.5rem; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
-    .card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-    .card p { color: var(--muted); font-size: 0.9rem; }
-    .card.accent { border-color: var(--amber); }
-    .card.accent h3 { color: var(--amber); }
-    .how-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
-    .how-step { display: flex; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
-    .how-step:last-child { border-bottom: none; }
-    .step-num { width: 40px; height: 40px; background: var(--amber); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
-    .step-content h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
-    .step-content p { color: var(--muted); font-size: 0.9rem; }
-    .flashcard-demo { background: linear-gradient(135deg, #1a1400 0%, #121825 100%); border: 1px solid var(--amber); border-radius: 16px; padding: 2rem; margin: 2rem 0; }
-    .flashcard { background: var(--bg); border: 1px solid var(--amber); border-radius: 12px; padding: 1.5rem; max-width: 500px; margin: 0 auto; text-align: center; }
-    .flashcard .front { font-size: 1.5rem; font-weight: 600; color: var(--amber); margin-bottom: 1rem; }
-    .flashcard .back { color: var(--muted); font-size: 1rem; }
-    .flashcard .hint { color: var(--muted); font-size: 0.8rem; margin-top: 1rem; }
-    .stats-row { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
-    .stat { text-align: center; }
-    .stat .num { font-size: 2rem; font-weight: 700; color: var(--amber); }
-    .stat .label { font-size: 0.8rem; color: var(--muted); }
-    .cta { text-align: center; padding: 4rem 0; }
-    .cta h2 { font-size: 2.25rem; margin-bottom: 1rem; }
-    .cta p { color: var(--muted); margin-bottom: 2rem; }
-    .btn { display: inline-block; background: var(--amber); color: #000; padding: 0.875rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; }
-    .btn:hover { background: var(--accent); }
-    .live-bar { background: var(--surface); border-top: 1px solid var(--border); padding: 0.75rem 0; text-align: center; }
-    .live-dot { display: inline-block; width: 8px; height: 8px; background: var(--amber); border-radius: 50%; margin-right: 0.4rem; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-    footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
-    @media (max-width: 768px) { .hero h1 { font-size: 2.25rem; } .grid-3 { grid-template-columns: 1fr; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studylog — Build Knowledge That Compounds</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0b0d13;
+            --bg-surface: #131620;
+            --bg-card: #1a1e2a;
+            --bg-card-hover: #1f2435;
+            --accent: #5b8af0;
+            --accent-dim: #3d5ea8;
+            --accent-glow: rgba(91, 138, 240, 0.15);
+            --text-primary: #e8eaf0;
+            --text-secondary: #8b90a0;
+            --text-muted: #565a6a;
+            --green: #4ade80;
+            --green-dim: #22c55e;
+            --green-glow: rgba(74, 222, 128, 0.12);
+            --amber: #fbbf24;
+            --amber-glow: rgba(251, 191, 36, 0.12);
+            --border: rgba(91, 138, 240, 0.1);
+            --border-bright: rgba(91, 138, 240, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-dim);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(11, 13, 19, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+
+        nav {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: #fff !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600 !important;
+            transition: background 0.2s, transform 0.15s !important;
+        }
+
+        .nav-cta:hover {
+            background: #6e9bf5 !important;
+            transform: translateY(-1px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-deep), transparent);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 100px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
+        }
+
+        .hero h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 1px;
+            opacity: 0.4;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #6e9bf5;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(91, 138, 240, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: 1px solid var(--border-bright);
+            transition: background 0.2s, transform 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .hero-tiles {
+            margin-top: 5rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.78rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--text-secondary);
+            animation: tile-float 4s ease-in-out infinite;
+        }
+
+        .hero-tile:nth-child(1) { animation-delay: 0s; }
+        .hero-tile:nth-child(2) { animation-delay: 0.5s; }
+        .hero-tile:nth-child(3) { animation-delay: 1s; }
+        .hero-tile:nth-child(4) { animation-delay: 1.5s; }
+        .hero-tile:nth-child(5) { animation-delay: 2s; }
+
+        @keyframes tile-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* ===== SECTION COMMON ===== */
+        section {
+            padding: 7rem 2rem;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.75;
+        }
+
+        /* ===== FEATURES ===== */
+        .features-section {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-header .section-sub {
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-bright);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-glow);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.4rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .feature-card .feature-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.72rem;
+            font-family: 'Space Mono', monospace;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid rgba(91, 138, 240, 0.2);
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .howitworks {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 6rem 2rem;
+        }
+
+        .howitworks-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .howitworks-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 2rem;
+            align-items: start;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        .step-content .step-meta {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .step-meta span {
+            font-size: 0.72rem;
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        /* ===== PLATO PRESENCE ===== */
+        .plato-section {
+            padding: 7rem 2rem;
+            text-align: center;
+        }
+
+        .plato-inner {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .plato-visual {
+            margin: 3rem auto 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .plato-room {
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            min-width: 260px;
+            text-align: left;
+            position: relative;
+        }
+
+        .plato-room::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--green), transparent);
+            border-radius: 1px;
+        }
+
+        .plato-room-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .plato-room-name {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .plato-room-tiles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .plato-tile {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.65rem;
+            font-size: 0.72rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--text-secondary);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .plato-tile:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .plato-stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .plato-stat {
+            text-align: center;
+        }
+
+        .plato-stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .plato-stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .plato-arrow {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .plato-explain {
+            text-align: left;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .plato-explain h4 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .plato-explain ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .plato-explain li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding-left: 1.2rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .plato-explain li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* ===== DELTA RECORDING ===== */
+        .delta-section {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 7rem 2rem;
+        }
+
+        .delta-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 700px) {
+            .delta-inner {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .delta-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .delta-box {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .delta-box.bad {
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .delta-box.good {
+            border-color: rgba(74, 222, 128, 0.2);
+        }
+
+        .delta-box-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .delta-box.bad .delta-box-label {
+            color: #ef4444;
+        }
+
+        .delta-box.good .delta-box-label {
+            color: var(--green);
+        }
+
+        .delta-box code {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: block;
+            line-height: 1.8;
+        }
+
+        .delta-box.bad code {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .delta-box.good code {
+            color: var(--text-secondary);
+        }
+
+        /* ===== LIVE INDICATOR ===== */
+        .live-section {
+            padding: 7rem 2rem;
+            text-align: center;
+        }
+
+        .live-inner {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--green-glow);
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            border-radius: 100px;
+            padding: 0.5rem 1.25rem;
+            margin-bottom: 2.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--green);
+        }
+
+        .live-indicator .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: live-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes live-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+        }
+
+        .live-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .live-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .live-card:hover {
+            border-color: var(--border-bright);
+        }
+
+        .live-card-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .live-card-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== KNOWLEDGE MAP PREVIEW ===== */
+        .map-section {
+            padding: 7rem 2rem;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .map-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .map-header {
+            margin-bottom: 3rem;
+        }
+
+        .map-preview {
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .map-node {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem;
+            font-size: 0.65rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.4;
+            transition: all 0.2s;
+        }
+
+        .map-node.active {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .map-node.strong {
+            background: var(--green-glow);
+            border-color: var(--green);
+            color: var(--green-dim);
+        }
+
+        .map-node.new {
+            background: var(--amber-glow);
+            border-color: var(--amber);
+            color: var(--amber);
+        }
+
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .map-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .map-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .map-legend-dot.strong { background: var(--green); opacity: 0.7; }
+        .map-legend-dot.active { background: var(--accent); opacity: 0.7; }
+        .map-legend-dot.new { background: var(--amber); opacity: 0.7; }
+        .map-legend-dot.dormant { background: var(--bg-surface); border: 1px solid var(--border); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-brand span {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 7rem 1.5rem 4rem;
+            }
+
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            .map-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tiles {
+                gap: 0.5rem;
+            }
+
+            .hero-tile {
+                font-size: 0.7rem;
+                padding: 0.45rem 0.75rem;
+            }
+
+            .map-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .step-number {
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav>
-    <div class="logo">📚 Studylog</div>
-    <div class="badge live">🟡 PLATO Connected</div>
-  </nav>
 
-  <div class="container hero">
-    <h1>Every Study Session<br>Becomes a <span>Tile</span></h1>
-    <p class="sub">Studylog turns learning into compound intelligence. Every session you file adds to a knowledge base that gets smarter the longer you use it. Spaced repetition without the spreadsheets.</p>
-    <div class="badge-row">
-      <span class="badge">📝 Session Logging</span>
-      <span class="badge">🃏 Flashcard Generation</span>
-      <span class="badge">🧠 Spaced Repetition</span>
-      <span class="badge">🗺️ Knowledge Map</span>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.9"/>
+                    <rect x="20" y="2" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.5"/>
+                    <rect x="2" y="20" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.5"/>
+                    <rect x="20" y="20" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.25"/>
+                </svg>
+                <span class="logo-text">study<span>log</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#plato">PLATO</a></li>
+                <li><a href="#live">Live</a></li>
+                <li><a href="#" class="nav-cta">Start Studying</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <div class="dot"></div>
+                Now tracking sessions live
+            </div>
+            <h1>Every study session becomes a <span class="highlight">tile</span>. Every tile compounds.</h1>
+            <p class="hero-sub">
+                Studylog turns your learning sessions into structured knowledge tiles — then makes those tiles work for you through spaced repetition and a living knowledge map. The room remembers what you studied. You just show up and learn.
+            </p>
+            <div class="hero-actions">
+                <a href="#" class="btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Start Your First Session
+                </a>
+                <a href="#features" class="btn-secondary">See How It Works</a>
+            </div>
+            <div class="hero-tiles">
+                <div class="hero-tile">quantum_entanglement_principles</div>
+                <div class="hero-tile">fermentation_biology_basics</div>
+                <div class="hero-tile">spanish_irregular_verbs_set3</div>
+                <div class="hero-tile">newtonian_mechanics_review</div>
+                <div class="hero-tile">cognitive_load_theory</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+        <div class="features-header">
+            <p class="section-label">What Studylog Does</p>
+            <h2 class="section-title">Four pillars of knowledge that sticks</h2>
+            <p class="section-sub">Most study tools track time. Studylog tracks transformation — the specific things you learned, how well you held onto them, and when they'll fade.</p>
+        </div>
+        <div class="features-grid">
+
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Session Logging</h3>
+                <p>Every session starts with what you're studying and ends with what you learned. Not a generic journal entry — a structured record: subject, duration, topic tags, and the specific concepts that landed. Sessions become the raw material for your knowledge tiles.</p>
+                <span class="feature-tag">timestamped &amp; tagged</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Flashcard Generation</h3>
+                <p>After your session, Studylog reviews your notes and study material to generate targeted flashcards — not random decks, but cards that address the specific gaps and edges of what you just covered. The harder the concept, the more cards it earns. You study the hard stuff first.</p>
+                <span class="feature-tag">auto-generated from session content</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔁</div>
+                <h3>Spaced Repetition</h3>
+                <p>Studylog schedules your flashcards using a spaced repetition model — the same principle that makes physical practice more effective than cramming. Each tile has an optimal review window based on how reliably you recall it. Forgetting isn't failure; it's data. Studylog uses it to time your next review perfectly.</p>
+                <span class="feature-tag">adaptive scheduling</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>Knowledge Map</h3>
+                <p>Your tiles don't just pile up — they form a living map. Topics cluster, connections emerge, and the map shows you which areas are strong (you've hit them hard and reviews are easy) versus which are fading (they haven't been reinforced recently). It's the difference between hoping you know something and being able to see it.</p>
+                <span class="feature-tag">living visualization</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <div class="howitworks" id="how-it-works">
+        <div class="howitworks-inner">
+            <div class="howitworks-header">
+                <p class="section-label">The Workflow</p>
+                <h2 class="section-title">From session to mastery in four steps</h2>
+            </div>
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Log a Study Session</h3>
+                        <p>Open a session, enter what you're studying — organic chemistry, Go programming, medieval history, whatever. Tag it with topics and subtopics. As you go, note the specific things you encountered: a formula, a term, a process, a pattern. When you're done, close the session.</p>
+                        <div class="step-meta">
+                            <span>5 min session</span>
+                            <span>topic tagging</span>
+                            <span>raw notes capture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Studylog Extracts Knowledge Deltas</h3>
+                        <p>After the session, Studylog reviews your notes and the source material you were studying. It identifies what was new to you — the deltas, not the whole session dump. Each delta becomes a potential tile: a concept you now understand that you didn't before. This is what gets stored, not a wall of text.</p>
+                        <div class="step-meta">
+                            <span>delta extraction</span>
+                            <span>new knowledge only</span>
+                            <span>no session dumps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Flashcards Are Generated and Scheduled</h3>
+                        <p>Each delta becomes a flashcard (or set of cards) targeting the specific nuance of that concept. Cards are sorted by difficulty and scheduled using spaced repetition. Easy cards get longer intervals. Hard ones come back sooner. The system gets smarter with every review you do.</p>
+                        <div class="step-meta">
+                            <span>auto flashcard generation</span>
+                            <span>spaced repetition</span>
+                            <span>difficulty-weighted</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Your Knowledge Map Grows and Guides You</h3>
+                        <p>Every tile you create feeds into your knowledge map. Over time, the map shows you what your brain is strong in, what's fading, and what you've been avoiding. You can study reactively (review what's due) or proactively (pick a weak area and shore it up). Both approaches compound.</p>
+                        <div class="step-meta">
+                            <span>knowledge map</span>
+                            <span>retention tracking</span>
+                            <span>guided study paths</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div>
 
-  <section class="section">
-    <div class="container">
-      <h2>Four Layers of Learning Intelligence</h2>
-      <p class="lead">From raw study sessions to verified knowledge — all in PLATO.</p>
-      <div class="grid-3">
-        <div class="card accent">
-          <h3>📝 Session Logging</h3>
-          <p>File what you studied, for how long, with what intensity. Not a timer — a presence record. "Studied chapter 7 quantum mechanics, 90 minutes, felt like I was getting it until section 7.4." The context matters.</p>
-        </div>
-        <div class="card accent">
-          <h3>🃏 Flashcard Generation</h3>
-          <p>Studylog reads your session notes and generates flashcards automatically. Highlight a passage → Studylog turns it into a question. Your study material becomes a spaced repetition deck without extra work.</p>
-        </div>
-        <div class="card accent">
-          <h3>🧠 Spaced Repetition</h3>
-          <p>Studylog schedules reviews based on how well you know each card. Easy → next month. Hard → next week. The algorithm adapts to your actual memory, not a generic interval.</p>
-        </div>
-        <div class="card">
-          <h3>🗺️ Knowledge Map</h3>
-          <p>See your knowledge as a map, not a list. Which topics are strong? Which are developing? Which have you abandoned? PLATO builds the topology of what you know.</p>
-        </div>
-        <div class="card">
-          <h3>🔍 Cross-Reference</h3>
-          <p>Ask: "What do I know about signal processing across all my courses?" Studylog searches your entire learning history and surfaces the connections you forgot you had.</p>
-        </div>
-        <div class="card">
-          <h3>📈 Retention Tracking</h3>
-          <p>Track not just what you studied but what you retained. A weekly check-in asks: "Can you still explain this?" PLATO tracks your retention curve over time.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- PLATO PRESENCE -->
+    <section class="plato-section" id="plato">
+        <div class="plato-inner">
+            <p class="section-label">PLATO Integration</p>
+            <h2 class="section-title">The room remembers what you studied</h2>
+            <p class="section-sub">Studylog feeds into PLATO presence — a persistent knowledge room that records deltas, tracks retention, and surfaces what's fading before you even notice. It's not storage. It's memory with a pulse.</p>
 
-  <section class="section" style="background: var(--surface);">
-    <div class="container">
-      <h2>The Flashcard Workflow</h2>
-      <p class="lead">From study session to scheduled review in three steps.</p>
-      <div class="flashcard-demo">
-        <div class="flashcard">
-          <div class="front">What is the Riemann integral definition?</div>
-          <div class="back">The limit of Riemann sums as partition norm → 0, provided the limit exists and is independent of partition choice.</div>
-          <div class="hint">↻ Flip for answer · Next review: Tuesday</div>
-        </div>
-        <div style="text-align:center; margin-top: 1.5rem;">
-          <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">Generated from: "Math 201 — Chapter 7.2 Integration — Session 23, April 2026"</p>
-          <div class="stats-row">
-            <div class="stat"><div class="num" style="color:var(--amber)">3</div><div class="label">Reviews total</div></div>
-            <div class="stat"><div class="num" style="color:var(--amber)">85%</div><div class="label">Last accuracy</div></div>
-            <div class="stat"><div class="num" style="color:var(--amber)">Tue</div><div class="label">Next due</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+            <div class="plato-visual">
+                <div class="plato-room">
+                    <div class="plato-room-label">Active PLATO Room</div>
+                    <div class="plato-room-name">neuroplasticity_studies</div>
+                    <div class="plato-room-tiles">
+                        <div class="plato-tile">hebbian_theory</div>
+                        <div class="plato-tile">synapse_pruning</div>
+                        <div class="plato-tile">myelin_sheath</div>
+                        <div class="plato-tile">chunking_cycles</div>
+                        <div class="plato-tile">dl_p_coordination</div>
+                        <div class="plato-tile">attention_buffers</div>
+                    </div>
+                    <div class="plato-stats">
+                        <div class="plato-stat">
+                            <div class="plato-stat-value">12</div>
+                            <div class="plato-stat-label">tiles active</div>
+                        </div>
+                        <div class="plato-stat">
+                            <div class="plato-stat-value">94%</div>
+                            <div class="plato-stat-label">retention</div>
+                        </div>
+                        <div class="plato-stat">
+                            <div class="plato-stat-value">2d</div>
+                            <div class="plato-stat-label">next review</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="plato-arrow">→</div>
+                <div class="plato-room">
+                    <div class="plato-room-label">Decaying / Needs Review</div>
+                    <div class="plato-room-name">thermodynamics_fundamentals</div>
+                    <div class="plato-room-tiles">
+                        <div class="plato-tile">entropy_def</div>
+                        <div class="plato-tile">gibbs_free_energy</div>
+                        <div class="plato-tile">phase_transitions</div>
+                    </div>
+                    <div class="plato-stats">
+                        <div class="plato-stat">
+                            <div class="plato-stat-value">3</div>
+                            <div class="plato-stat-label">tiles active</div>
+                        </div>
+                        <div class="plato-stat">
+                            <div class="plato-stat-value">61%</div>
+                            <div class="plato-stat-label">retention</div>
+                        </div>
+                        <div class="plato-stat">
+                            <div class="plato-stat-value">now</div>
+                            <div class="plato-stat-label">overdue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <section class="section">
-    <div class="container">
-      <h2>How Studylog Works</h2>
-      <p class="lead">Three steps from "I'm studying" to compound knowledge.</p>
-      <div class="how-box">
-        <div class="how-step">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h4>File the Session</h4>
-            <p>After a study session: what did you cover, what felt clear, what was confusing. One or two minutes of structured notes. PLATO stores it as a tile in your learning room.</p>
-          </div>
+            <div class="plato-explain">
+                <h4>How PLATO presence works in Studylog</h4>
+                <ul>
+                    <li><strong>Delta recording</strong> — Only new knowledge enters the room, not transcripts or dumps. A 90-minute organic chemistry session might yield 4–6 deltas. That's what gets stored and reviewed.</li>
+                    <li><strong>Retention scoring</strong> — Each tile in the room has a retention score that decays with time and non-review. When it drops below a threshold, the room surfaces it for your next session.</li>
+                    <li><strong>Cross-session continuity</strong> — You close your laptop. You come back two days later. The room already knows what you studied, where you left off, and what's due. No re-explaining, no searching through old notes.</li>
+                    <li><strong>Attention-aware scheduling</strong> — PLATO tracks your attention state during reviews. Cards you answered quickly get longer intervals. Cards you hesitated on get shorter ones, because hesitation is a signal — not a mistake.</li>
+                    <li><strong>Room health monitoring</strong> — Each room has a health score based on average tile retention. A healthy room means your knowledge in that area is stable. A decaying room means it's time to revisit before the fade becomes a gap.</li>
+                </ul>
+            </div>
         </div>
-        <div class="how-step">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h4>Flashcards Auto-Generate</h4>
-            <p>Studylog processes your notes and creates flashcards. Key concepts become questions. Important formulas become fill-in-the-blank. Connections become "how does X relate to Y?"</p>
-          </div>
-        </div>
-        <div class="how-step">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h4>Spaced Review</h4>
-            <p>Cards appear on a schedule tuned to your performance. When you nail a card, it waits longer next time. When you stumble, it comes back sooner. Your memory sets the interval.</p>
-          </div>
-        </div>
-        <div class="how-step">
-          <div class="step-num">4</div>
-          <div class="step-content">
-            <h4>Knowledge Compounds</h4>
-            <p>After 6 months: you have a searchable knowledge map, a refined flashcard deck, and a retention history. After a year: you can ask "what did I learn about statistics that's relevant to this problem?" and get an answer.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" style="background: var(--surface);">
-    <div class="container">
-      <h2>Who Uses Studylog</h2>
-      <p class="lead">Real learners who want their study time to compound.</p>
-      <div class="grid-3">
-        <div class="card">
-          <h3>🎓 University Students</h3>
-          <p>Track problem sets, lecture notes, and exam prep. Studylog keeps the thread across 4 years of courses. "What did I learn about differential equations that applies here?" The room knows.</p>
+    <!-- DELTA RECORDING -->
+    <section class="delta-section" id="delta">
+        <div class="delta-inner">
+            <div>
+                <p class="section-label">Delta Recording</p>
+                <h2 class="section-title">Only new knowledge.<br>Nothing more.</h2>
+                <p class="section-sub" style="margin-top: 1rem;">
+                    Most study logs record what happened. Studylog records what changed. A session dump tells you "I studied for 90 minutes." A delta tells you "I now understand how Gibbs free energy predicts reaction spontaneity — and I didn't know that Tuesday." The difference is everything.
+                </p>
+                <p class="section-sub" style="margin-top: 1rem;">
+                    Delta recording means your knowledge base stays lean and meaningful. You don't have to scroll through pages of notes to find the thing you actually learned. The tile <em>is</em> the thing you learned.
+                </p>
+            </div>
+            <div class="delta-comparison">
+                <div class="delta-box bad">
+                    <div class="delta-box-label">Old approach — full session dump</div>
+                    <code>
+Session: 90min<br>
+Subject: Organic Chemistry<br>
+Source: Chapter 7, Campbell Biology<br>
+Notes: "read about thermodynamics,<br>
+did practice problems, some stuff<br>
+about energy and reactions, felt okay<br>
+about it, need to review more,<br>
+look at the diagrams again..."
+                    </code>
+                </div>
+                <div class="delta-box good">
+                    <div class="delta-box-label">Studylog — knowledge delta</div>
+                    <code>
+Delta: Gibbs free energy predicts<br>
+reaction spontaneity at constant<br>
+T and P. ΔG &lt; 0 means forward<br>
+reaction is spontaneous.<br>
+<br>
+Tile ID: gibbs_free_energy<br>
+Source: Campbell Bio Ch7.3<br>
+Studied: 2026-05-05<br>
+Reviews: 3 | Retention: 91%
+                    </code>
+                </div>
+            </div>
         </div>
-        <div class="card">
-          <h3>💻 Software Developers</h3>
-          <p>File what you learned from a new technology. "Read the Rust concurrency chapter — got ownership, still fuzzy on lifetimes." The card shows up when you're about to make that mistake again.</p>
-        </div>
-        <div class="card">
-          <h3>🏥 Medical Students</h3>
-          <p>Anatomy, pharmacology, pathology — the volume is impossible without spaced repetition. Studylog generates cards from lecture notes and tracks retention across the entire curriculum.</p>
-        </div>
-        <div class="card">
-          <h3>📊 Data Scientists</h3>
-          <p>Statistics, ML theory, mathematical foundations — file concepts as you encounter them. When a new paper references something you studied months ago, Studylog surfaces the context.</p>
-        </div>
-        <div class="card">
-          <h3>🌍 Language Learners</h3>
-          <p>Vocabulary, grammar patterns, idioms — every study session becomes a flashcard deck. The room remembers which words you've nailed and which still slip.</p>
-        </div>
-        <div class="card">
-          <h3>📚 Lifelong Learners</h3>
-          <p>Not a student anymore? Studylog works for anyone reading books, taking online courses, watching tutorials. Your learning history becomes a personal knowledge base.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <div style="background: linear-gradient(135deg, #1a1400 0%, #0f1a2e 100%); border: 1px solid #2a3f5f; border-radius: 16px; padding: 2.5rem; text-align: center;">
-        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🔮 PLATO: The Study Ether</h3>
-        <p style="color: var(--muted); max-width: 600px; margin: 0 auto 1.5rem;">PLATO's delta recording means you store what you learned — not a full dump of everything. 95-99% storage reduction. Every session tile connects to the previous ones. The room remembers what you studied, even when you forget.</p>
-        <div class="stats-row">
-          <div class="stat"><div class="num" style="color:var(--amber)">95-99%</div><div class="label">Storage Reduction</div></div>
-          <div class="stat"><div class="num" style="color:var(--amber)">100%</div><div class="label">Session Accuracy</div></div>
-          <div class="stat"><div class="num" style="color:var(--amber)">∞</div><div class="label">Knowledge Compounding</div></div>
+    <!-- LIVE INDICATOR -->
+    <section class="live-section" id="live">
+        <div class="live-inner">
+            <div class="live-indicator">
+                <div class="pulse"></div>
+                Sessions tracked in real-time
+            </div>
+            <h2 class="section-title">Live indicator — your study session, live</h2>
+            <p class="section-sub" style="margin: 0 auto;">
+                When a session is active, Studylog shows you exactly what's happening: the subject, duration counter, current topic, tiles being extracted, and how your knowledge map is updating in real time. You see the compounding happen as it happens.
+            </p>
+            <div class="live-cards">
+                <div class="live-card">
+                    <div class="live-card-title">Session Timer</div>
+                    <div class="live-card-desc">Live elapsed time with Pomodoro support. Breaks are tracked separately so they don't pollute your actual study time.</div>
+                </div>
+                <div class="live-card">
+                    <div class="live-card-title">Topic Tagging</div>
+                    <div class="live-card-desc">Add topic tags mid-session. Tags cluster in real time so you know immediately if you're spreading yourself across too many areas.</div>
+                </div>
+                <div class="live-card">
+                    <div class="live-card-title">Delta Streaming</div>
+                    <div class="live-card-desc">As you note things during the session, deltas appear in a live feed. You see concepts being extracted in real time, not after the fact.</div>
+                </div>
+                <div class="live-card">
+                    <div class="live-card-title">Map Updates</div>
+                    <div class="live-card-desc">Your knowledge map updates live as tiles are created. New nodes pulse into existence. Existing nodes brighten if they connect to what you're studying now.</div>
+                </div>
+                <div class="live-card">
+                    <div class="live-card-title">Review Queue</div>
+                    <div class="live-card-desc">Cards due for review appear in a live queue sidebar. You can switch from active studying to review mode without losing context.</div>
+                </div>
+                <div class="live-card">
+                    <div class="live-card-title">Session Summary</div>
+                    <div class="live-card-desc">When you close the session, a full summary is generated: total time, deltas captured, cards generated, retention trend, and recommended next steps.</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="cta">
-    <div class="container">
-      <h2>Start Building Your Knowledge Base</h2>
-      <p>Every session. Every concept. Every connection. All in PLATO.</p>
-      <a href="https://github.com/SuperInstance/studylog-agent" class="btn">View on GitHub →</a>
-    </div>
-  </section>
+    <!-- KNOWLEDGE MAP -->
+    <section class="map-section" id="map">
+        <div class="map-inner">
+            <div class="map-header">
+                <p class="section-label">Knowledge Map</p>
+                <h2 class="section-title">See your knowledge, not just your notes</h2>
+                <p class="section-sub" style="margin: 0.75rem auto 0;">The map is a living graph of every tile you've created, colored by strength. Green means it's solid. Amber means it's fading. Dim means it's dormant. You don't have to guess — you can see it.</p>
+            </div>
+            <div class="map-preview">
+                <div class="map-grid">
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node strong">hebbian</div>
+                    <div class="map-node active">chunking</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node active">entropy_def</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node strong">synapse</div>
+                    <div class="map-node new">gibbs_fe</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node active">attention</div>
+                    <div class="map-node active">myelin</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node strong">phase_tr</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node active">pruning</div>
+                    <div class="map-node new">dl_p_co</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node strong">buffers</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node active">spaced_r</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node active">retention</div>
+                    <div class="map-node dormant">dormant</div>
+                    <div class="map-node strong">encoding</div>
+                    <div class="map-node dormant">dormant</div>
+                </div>
+                <div class="map-legend">
+                    <div class="map-legend-item">
+                        <div class="map-legend-dot strong"></div>
+                        Strong (reviewed recently, high retention)
+                    </div>
+                    <div class="map-legend-item">
+                        <div class="map-legend-dot active"></div>
+                        Active (on review schedule)
+                    </div>
+                    <div class="map-legend-item">
+                        <div class="map-legend-dot new"></div>
+                        New (recently created, not yet reviewed)
+                    </div>
+                    <div class="map-legend-item">
+                        <div class="map-legend-dot dormant"></div>
+                        Dormant (not reviewed recently)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="live-bar">
-    <span><span class="live-dot"></span>PLATO study rooms active — knowledge compounding</span>
-  </div>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.9"/>
+                    <rect x="20" y="2" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.5"/>
+                    <rect x="2" y="20" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.5"/>
+                    <rect x="20" y="20" width="14" height="14" rx="3" fill="var(--accent)" opacity="0.25"/>
+                </svg>
+                <span>studylog</span>
+            </div>
+            <p class="footer-copy">© 2026 Studylog. Built for students who take learning seriously.</p>
+            <ul class="footer-links">
+                <li><a href="#">Documentation</a></li>
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">PLATO Integration</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+        </div>
+    </footer>
 
-  <footer>
-    <p>Studylog is part of the Cocapn fleet. Your learning deserves better than a forgotten notebook.</p>
-  </footer>
 </body>
 </html>
