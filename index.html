@@ -1,88 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studylog.ai — Learning Progress Tracker</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: system-ui, sans-serif; background: #0a1a0f; color: #e2e8f0; min-height: 100vh; }
-        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
-        header { text-align: center; padding: 3rem 0; border-bottom: 2px solid #1a3a1f; }
-        h1 { font-size: 2.5rem; color: #34d399; margin-bottom: 0.5rem; }
-        .subtitle { color: #6b7280; font-size: 1.1rem; }
-        .fleet-badge { display: inline-block; background: #1a3a1f; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; color: #34d399; margin-top: 1rem; }
-        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
-        .status-card { background: #0f2a1a; border: 1px solid #1a4d2e; border-radius: 12px; padding: 1.5rem; }
-        .status-card h3 { color: #34d399; font-size: 0.9rem; margin-bottom: 0.5rem; }
-        .status-card .value { font-size: 1.5rem; font-weight: bold; color: #fff; }
-        .status-card .sub { font-size: 0.75rem; color: #64748b; }
-        .features { margin: 2rem 0; }
-        .features h2 { color: #34d399; margin-bottom: 1rem; }
-        .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-        .feature { background: #0f2a1a; border-radius: 8px; padding: 1rem; }
-        .feature h4 { color: #fff; margin-bottom: 0.3rem; }
-        .feature p { color: #6b7280; font-size: 0.85rem; }
-        .plato-status { background: #0f2a1a; border: 1px solid #1a4d2e; border-radius: 8px; padding: 1rem; margin: 2rem 0; text-align: center; }
-        .plato-status .label { font-size: 0.75rem; color: #64748b; }
-        .plato-status .value { color: #22c55e; font-size: 1.1rem; font-weight: bold; }
-        footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.8rem; border-top: 1px solid #1a3a1f; margin-top: 2rem; }
-        a { color: #34d399; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studylog — Build Knowledge That Compounds</title>
+  <meta name="description" content="PLATO-powered study tracker. Every session becomes a tile. Every tile compounds.">
+  <style>
+    :root { --bg: #0a0e17; --surface: #121825; --border: #1e2a3a; --text: #e2e8f0; --muted: #64748b; --accent: #f59e0b; --amber: #fbbf24; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; border-bottom: 1px solid var(--border); }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    .hero { text-align: center; padding: 5rem 0 3rem; background: linear-gradient(180deg, #1a1400 0%, var(--bg) 100%); }
+    .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.25rem; }
+    .hero h1 span { color: var(--amber); }
+    .hero .sub { font-size: 1.25rem; color: var(--muted); max-width: 600px; margin: 0 auto 2rem; }
+    .badge-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .badge { background: var(--surface); border: 1px solid var(--border); padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.8rem; }
+    .badge.live { border-color: var(--amber); color: var(--amber); }
+    .section { padding: 4rem 0; }
+    .section h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .section .lead { color: var(--muted); max-width: 680px; margin-bottom: 2.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+    .card p { color: var(--muted); font-size: 0.9rem; }
+    .card.accent { border-color: var(--amber); }
+    .card.accent h3 { color: var(--amber); }
+    .how-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
+    .how-step { display: flex; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+    .how-step:last-child { border-bottom: none; }
+    .step-num { width: 40px; height: 40px; background: var(--amber); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .step-content h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .step-content p { color: var(--muted); font-size: 0.9rem; }
+    .flashcard-demo { background: linear-gradient(135deg, #1a1400 0%, #121825 100%); border: 1px solid var(--amber); border-radius: 16px; padding: 2rem; margin: 2rem 0; }
+    .flashcard { background: var(--bg); border: 1px solid var(--amber); border-radius: 12px; padding: 1.5rem; max-width: 500px; margin: 0 auto; text-align: center; }
+    .flashcard .front { font-size: 1.5rem; font-weight: 600; color: var(--amber); margin-bottom: 1rem; }
+    .flashcard .back { color: var(--muted); font-size: 1rem; }
+    .flashcard .hint { color: var(--muted); font-size: 0.8rem; margin-top: 1rem; }
+    .stats-row { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+    .stat { text-align: center; }
+    .stat .num { font-size: 2rem; font-weight: 700; color: var(--amber); }
+    .stat .label { font-size: 0.8rem; color: var(--muted); }
+    .cta { text-align: center; padding: 4rem 0; }
+    .cta h2 { font-size: 2.25rem; margin-bottom: 1rem; }
+    .cta p { color: var(--muted); margin-bottom: 2rem; }
+    .btn { display: inline-block; background: var(--amber); color: #000; padding: 0.875rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; }
+    .btn:hover { background: var(--accent); }
+    .live-bar { background: var(--surface); border-top: 1px solid var(--border); padding: 0.75rem 0; text-align: center; }
+    .live-dot { display: inline-block; width: 8px; height: 8px; background: var(--amber); border-radius: 50%; margin-right: 0.4rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
+    @media (max-width: 768px) { .hero h1 { font-size: 2.25rem; } .grid-3 { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📚 Studylog.ai</h1>
-            <p class="subtitle">Learning Progress Across the Fleet</p>
-            <span class="fleet-badge">⚡ SuperInstance Fleet Agent</span>
-        </header>
-        <div class="status-grid">
-            <div class="status-card">
-                <h3>Active Studies</h3>
-                <div class="value">24</div>
-                <div class="sub">In progress</div>
-            </div>
-            <div class="status-card">
-                <h3>Lessons Learned</h3>
-                <div class="value">1,847</div>
-                <div class="sub">Recorded</div>
-            </div>
-            <div class="status-card">
-                <h3>Connections</h3>
-                <div class="value">18</div>
-                <div class="sub">Fleet agents</div>
-            </div>
-        </div>
-        <div class="features">
-            <h2>Capabilities</h2>
-            <div class="feature-list">
-                <div class="feature">
-                    <h4>📖 Progress Tracking</h4>
-                    <p>Track learning milestones across all fleet agents</p>
-                </div>
-                <div class="feature">
-                    <h4>🎯 Skill Mapping</h4>
-                    <p>Map capabilities to domains and domains to needs</p>
-                </div>
-                <div class="feature">
-                    <h4>🧪 Knowledge Gaps</h4>
-                    <p>Identify where the fleet needs to learn next</p>
-                </div>
-                <div class="feature">
-                    <h4>📝 Study Sessions</h4>
-                    <p>Log and review learning sessions across the fleet</p>
-                </div>
-            </div>
-        </div>
-        <div class="plato-status">
-            <div class="label">PLATO CONNECTION</div>
-            <div class="value">● Connected — 1,447 rooms, 23 agents</div>
-        </div>
-        <footer>
-            <p>Studylog.ai — Part of the SuperInstance Fleet</p>
-            <p>PLATO Room: <code>studylog</code> · Agent: studylog-agent</p>
-        </footer>
+  <nav>
+    <div class="logo">📚 Studylog</div>
+    <div class="badge live">🟡 PLATO Connected</div>
+  </nav>
+
+  <div class="container hero">
+    <h1>Every Study Session<br>Becomes a <span>Tile</span></h1>
+    <p class="sub">Studylog turns learning into compound intelligence. Every session you file adds to a knowledge base that gets smarter the longer you use it. Spaced repetition without the spreadsheets.</p>
+    <div class="badge-row">
+      <span class="badge">📝 Session Logging</span>
+      <span class="badge">🃏 Flashcard Generation</span>
+      <span class="badge">🧠 Spaced Repetition</span>
+      <span class="badge">🗺️ Knowledge Map</span>
     </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <h2>Four Layers of Learning Intelligence</h2>
+      <p class="lead">From raw study sessions to verified knowledge — all in PLATO.</p>
+      <div class="grid-3">
+        <div class="card accent">
+          <h3>📝 Session Logging</h3>
+          <p>File what you studied, for how long, with what intensity. Not a timer — a presence record. "Studied chapter 7 quantum mechanics, 90 minutes, felt like I was getting it until section 7.4." The context matters.</p>
+        </div>
+        <div class="card accent">
+          <h3>🃏 Flashcard Generation</h3>
+          <p>Studylog reads your session notes and generates flashcards automatically. Highlight a passage → Studylog turns it into a question. Your study material becomes a spaced repetition deck without extra work.</p>
+        </div>
+        <div class="card accent">
+          <h3>🧠 Spaced Repetition</h3>
+          <p>Studylog schedules reviews based on how well you know each card. Easy → next month. Hard → next week. The algorithm adapts to your actual memory, not a generic interval.</p>
+        </div>
+        <div class="card">
+          <h3>🗺️ Knowledge Map</h3>
+          <p>See your knowledge as a map, not a list. Which topics are strong? Which are developing? Which have you abandoned? PLATO builds the topology of what you know.</p>
+        </div>
+        <div class="card">
+          <h3>🔍 Cross-Reference</h3>
+          <p>Ask: "What do I know about signal processing across all my courses?" Studylog searches your entire learning history and surfaces the connections you forgot you had.</p>
+        </div>
+        <div class="card">
+          <h3>📈 Retention Tracking</h3>
+          <p>Track not just what you studied but what you retained. A weekly check-in asks: "Can you still explain this?" PLATO tracks your retention curve over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--surface);">
+    <div class="container">
+      <h2>The Flashcard Workflow</h2>
+      <p class="lead">From study session to scheduled review in three steps.</p>
+      <div class="flashcard-demo">
+        <div class="flashcard">
+          <div class="front">What is the Riemann integral definition?</div>
+          <div class="back">The limit of Riemann sums as partition norm → 0, provided the limit exists and is independent of partition choice.</div>
+          <div class="hint">↻ Flip for answer · Next review: Tuesday</div>
+        </div>
+        <div style="text-align:center; margin-top: 1.5rem;">
+          <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">Generated from: "Math 201 — Chapter 7.2 Integration — Session 23, April 2026"</p>
+          <div class="stats-row">
+            <div class="stat"><div class="num" style="color:var(--amber)">3</div><div class="label">Reviews total</div></div>
+            <div class="stat"><div class="num" style="color:var(--amber)">85%</div><div class="label">Last accuracy</div></div>
+            <div class="stat"><div class="num" style="color:var(--amber)">Tue</div><div class="label">Next due</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>How Studylog Works</h2>
+      <p class="lead">Three steps from "I'm studying" to compound knowledge.</p>
+      <div class="how-box">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>File the Session</h4>
+            <p>After a study session: what did you cover, what felt clear, what was confusing. One or two minutes of structured notes. PLATO stores it as a tile in your learning room.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Flashcards Auto-Generate</h4>
+            <p>Studylog processes your notes and creates flashcards. Key concepts become questions. Important formulas become fill-in-the-blank. Connections become "how does X relate to Y?"</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Spaced Review</h4>
+            <p>Cards appear on a schedule tuned to your performance. When you nail a card, it waits longer next time. When you stumble, it comes back sooner. Your memory sets the interval.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Knowledge Compounds</h4>
+            <p>After 6 months: you have a searchable knowledge map, a refined flashcard deck, and a retention history. After a year: you can ask "what did I learn about statistics that's relevant to this problem?" and get an answer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--surface);">
+    <div class="container">
+      <h2>Who Uses Studylog</h2>
+      <p class="lead">Real learners who want their study time to compound.</p>
+      <div class="grid-3">
+        <div class="card">
+          <h3>🎓 University Students</h3>
+          <p>Track problem sets, lecture notes, and exam prep. Studylog keeps the thread across 4 years of courses. "What did I learn about differential equations that applies here?" The room knows.</p>
+        </div>
+        <div class="card">
+          <h3>💻 Software Developers</h3>
+          <p>File what you learned from a new technology. "Read the Rust concurrency chapter — got ownership, still fuzzy on lifetimes." The card shows up when you're about to make that mistake again.</p>
+        </div>
+        <div class="card">
+          <h3>🏥 Medical Students</h3>
+          <p>Anatomy, pharmacology, pathology — the volume is impossible without spaced repetition. Studylog generates cards from lecture notes and tracks retention across the entire curriculum.</p>
+        </div>
+        <div class="card">
+          <h3>📊 Data Scientists</h3>
+          <p>Statistics, ML theory, mathematical foundations — file concepts as you encounter them. When a new paper references something you studied months ago, Studylog surfaces the context.</p>
+        </div>
+        <div class="card">
+          <h3>🌍 Language Learners</h3>
+          <p>Vocabulary, grammar patterns, idioms — every study session becomes a flashcard deck. The room remembers which words you've nailed and which still slip.</p>
+        </div>
+        <div class="card">
+          <h3>📚 Lifelong Learners</h3>
+          <p>Not a student anymore? Studylog works for anyone reading books, taking online courses, watching tutorials. Your learning history becomes a personal knowledge base.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, #1a1400 0%, #0f1a2e 100%); border: 1px solid #2a3f5f; border-radius: 16px; padding: 2.5rem; text-align: center;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🔮 PLATO: The Study Ether</h3>
+        <p style="color: var(--muted); max-width: 600px; margin: 0 auto 1.5rem;">PLATO's delta recording means you store what you learned — not a full dump of everything. 95-99% storage reduction. Every session tile connects to the previous ones. The room remembers what you studied, even when you forget.</p>
+        <div class="stats-row">
+          <div class="stat"><div class="num" style="color:var(--amber)">95-99%</div><div class="label">Storage Reduction</div></div>
+          <div class="stat"><div class="num" style="color:var(--amber)">100%</div><div class="label">Session Accuracy</div></div>
+          <div class="stat"><div class="num" style="color:var(--amber)">∞</div><div class="label">Knowledge Compounding</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Start Building Your Knowledge Base</h2>
+      <p>Every session. Every concept. Every connection. All in PLATO.</p>
+      <a href="https://github.com/SuperInstance/studylog-agent" class="btn">View on GitHub →</a>
+    </div>
+  </section>
+
+  <div class="live-bar">
+    <span><span class="live-dot"></span>PLATO study rooms active — knowledge compounding</span>
+  </div>
+
+  <footer>
+    <p>Studylog is part of the Cocapn fleet. Your learning deserves better than a forgotten notebook.</p>
+  </footer>
 </body>
 </html>
