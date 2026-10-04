@@ -1,0 +1,45 @@
+/* studylog.ai — chalkboard: deep green, chalk white, pencil yellow. */
+.le-root {
+  --le-bg: #123524;
+  --le-ink: #f2efe4;
+  --le-muted: #9db8a5;
+  --le-accent: #f2c230;
+  --le-card: #16402c;
+  --le-line: #2c5c42;
+  --le-go: #7dd87d;
+  --le-hold: #f2c230;
+  --le-nogo: #ff8a7a;
+  --le-font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --le-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+.le-root {
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(242,194,48,.04), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(255,255,255,.03), transparent 50%);
+}
+
+.le-wordmark {
+  text-decoration: underline wavy var(--le-accent) 2px;
+  text-underline-offset: 6px;
+}
+
+/* retention ledger */
+.sk-study-ledger {
+  background: var(--le-card);
+  border: 1px solid var(--le-line);
+  border-radius: .8rem;
+  padding: 1.1rem 1.2rem;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.18);
+}
+.sk-study-bars { display: grid; gap: .55rem; margin-top: .8rem; }
+.sk-study-bar { display: grid; grid-template-columns: 8.5rem 1fr 3rem; gap: .7rem; align-items: center; }
+.sk-study-name { font-size: .85rem; color: var(--le-ink); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.sk-study-track { height: .7rem; background: rgba(0,0,0,.35); border-radius: 999px;
+  border: 1px solid var(--le-line); overflow: hidden; }
+.sk-study-fill { display: block; height: 100%; border-radius: 999px;
+  background: repeating-linear-gradient(90deg, var(--le-accent), var(--le-accent) 3px, #d8a91f 3px, #d8a91f 6px);
+  box-shadow: 0 0 8px rgba(242,194,48,.45); }
+.sk-study-pct { font-family: var(--le-mono); font-size: .8rem; color: var(--le-accent); text-align: right; }
+.sk-study-foot { margin: .9rem 0 0; font-size: .88rem; color: var(--le-muted); font-style: italic; }

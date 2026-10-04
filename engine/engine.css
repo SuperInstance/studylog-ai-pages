@@ -1,0 +1,107 @@
+/* LogEngine base styles. Skins override the --le-* variables and add their
+ * own skin.css AFTER this file. Keep selectors prefixed le- to avoid clashes.
+ */
+.le-root {
+  --le-bg: #faf8f3;
+  --le-ink: #1c1a16;
+  --le-muted: #6f6a5e;
+  --le-accent: #2f6df6;
+  --le-card: #ffffff;
+  --le-line: #e7e1d4;
+  --le-go: #1d7a3a;
+  --le-hold: #a86a00;
+  --le-nogo: #b3261e;
+  --le-font: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --le-mono: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+
+  background: var(--le-bg);
+  color: var(--le-ink);
+  font-family: var(--le-font);
+  min-height: 100vh;
+  margin: 0;
+}
+.le-root *, .le-root *::before, .le-root *::after { box-sizing: border-box; }
+
+/* for-sale banner */
+.le-banner {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem 1.2rem;
+  background: var(--le-ink); color: var(--le-bg);
+  font-size: .82rem; letter-spacing: .01em;
+}
+.le-banner-dot {
+  width: .5rem; height: .5rem; border-radius: 50%;
+  background: var(--le-accent); flex: none;
+  animation: le-pulse 2.4s ease-in-out infinite;
+}
+@keyframes le-pulse { 50% { opacity: .35; } }
+.le-banner-cta { margin-left: auto; color: inherit; font-weight: 600; text-decoration: none;
+  border-bottom: 1px solid var(--le-accent); }
+.le-banner-cta:hover { color: var(--le-accent); }
+
+/* header */
+.le-head { padding: 2.2rem 1.2rem 0; max-width: 880px; margin: 0 auto; }
+.le-wordmark { font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 800; letter-spacing: -.02em; }
+.le-tagline { color: var(--le-muted); font-size: 1.05rem; margin-top: .3rem; }
+
+.le-main { max-width: 880px; margin: 0 auto; padding: 1.4rem 1.2rem 3rem;
+  display: flex; flex-direction: column; gap: 1.6rem; }
+.le-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--le-muted); font-weight: 700; }
+.le-hint { text-transform: none; letter-spacing: 0; font-weight: 400; opacity: .85; }
+
+/* composer */
+.le-compose-row { display: flex; gap: .6rem; margin-top: .5rem; }
+.le-input { flex: 1; padding: .8rem 1rem; font-size: 1rem; border: 1px solid var(--le-line);
+  border-radius: .6rem; background: var(--le-card); color: var(--le-ink); font-family: inherit; }
+.le-input:focus { outline: 2px solid var(--le-accent); border-color: transparent; }
+.le-btn { padding: .8rem 1.4rem; border: 0; border-radius: .6rem; cursor: pointer;
+  background: var(--le-accent); color: #fff; font-weight: 700; font-size: 1rem; }
+.le-btn:disabled { opacity: .6; cursor: wait; }
+.le-btn:hover:not(:disabled) { filter: brightness(1.08); }
+
+/* field */
+.le-field-head { display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: .6rem; flex-wrap: wrap; gap: .4rem; }
+.le-rows { display: flex; flex-direction: column; gap: .7rem; }
+.le-row { background: var(--le-card); border: 1px solid var(--le-line);
+  border-radius: .7rem; padding: .9rem 1rem;
+  animation: le-rise .45s ease both; }
+.le-row:nth-child(2) { animation-delay: .06s; } .le-row:nth-child(3) { animation-delay: .12s; }
+.le-row:nth-child(4) { animation-delay: .18s; } .le-row:nth-child(5) { animation-delay: .24s; }
+.le-row:nth-child(n+6) { animation-delay: .3s; }
+@keyframes le-rise { from { opacity: 0; transform: translateY(10px); } }
+.le-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+.le-factor-label { font-weight: 700; }
+.le-factor-nums { font-family: var(--le-mono); font-size: .85rem; color: var(--le-muted); }
+.le-factor-note { color: var(--le-muted); font-size: .9rem; margin-top: .25rem; }
+.le-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: .6rem; }
+.le-sliders label { font-size: .75rem; color: var(--le-muted); display: flex;
+  flex-direction: column; gap: .25rem; }
+.le-sliders input[type="range"] { width: 100%; accent-color: var(--le-accent); }
+@media (max-width: 560px) { .le-sliders { grid-template-columns: 1fr; } }
+
+/* verdict */
+.le-verdict { background: var(--le-card); border: 1px solid var(--le-line);
+  border-radius: .8rem; padding: 1.1rem 1.2rem; }
+.le-verdict-value { font-size: 2.2rem; font-weight: 800; letter-spacing: -.01em; margin: .3rem 0; }
+.le-verdict-value.le-go { color: var(--le-go); }
+.le-verdict-value.le-hold { color: var(--le-hold); }
+.le-verdict-value.le-nogo { color: var(--le-nogo); }
+.le-verdict-rule { font-family: var(--le-mono); font-size: .85rem; color: var(--le-muted); }
+
+/* log */
+.le-log { list-style: none; margin: .6rem 0 0; padding: 0; display: flex;
+  flex-direction: column; gap: .45rem; max-height: 300px; overflow: auto; }
+.le-logitem { background: var(--le-card); border: 1px solid var(--le-line);
+  border-radius: .55rem; padding: .6rem .8rem; font-size: .9rem; }
+.le-logtime { font-family: var(--le-mono); font-size: .78rem; color: var(--le-muted); margin-right: .4rem; }
+.le-log-verdict { border-left: 3px solid var(--le-accent); }
+
+/* ad slot — conservative single unit */
+.le-adslot { min-height: 90px; border: 1px dashed var(--le-line); border-radius: .6rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--le-muted); font-size: .75rem; }
+
+/* extra panel (skin extensions) */
+.le-extra:empty { display: none; }
